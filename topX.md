@@ -1,3 +1,4 @@
+```
 top_x_by = (tables=<-, by_measurement, x) =>
   tables
   |> group(columns:[by_measurement,"_measurement"], mode:"by")
@@ -8,7 +9,8 @@ top_x_by = (tables=<-, by_measurement, x) =>
   |>limit(n:x)
   |>rename(columns: {_time: "ignore_time"})
 
-
+```
+```
 hosts_ranked_by_cpu = from(bucket: "telegraf/autogen")
   |> range(start: dashboardTime)
   |> filter(fn: (r) => 
@@ -17,7 +19,8 @@ hosts_ranked_by_cpu = from(bucket: "telegraf/autogen")
   )
   |>max()
   |>top_x_by(by_measurement:"host",x:2)
-
+```
+```
 all_hosts_cpu_series = from(bucket: "telegraf/autogen")
   |> range(start: dashboardTime)
   |> filter(fn: (r) => 
@@ -26,7 +29,8 @@ all_hosts_cpu_series = from(bucket: "telegraf/autogen")
   )
   |>rename(columns: {_start: "start", _stop: "stop"})
   |>group()
-  
+```
+```
 join(
   tables: {cpu:hosts_ranked_by_cpu, all:all_hosts_cpu_series},
   on: ["host"]
@@ -36,3 +40,4 @@ join(
 		_time: r._time,
         _value: r._value_all,
     }))
+```
