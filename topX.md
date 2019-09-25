@@ -17,7 +17,6 @@ hosts_ranked_by_cpu = from(bucket: "telegraf/autogen")
     r._measurement == "cpu" and 
     r._field == "usage_user"
   )
-  |>max()
   |>top_x_by(by_measurement:"host",x:3)
 ```
 ```
