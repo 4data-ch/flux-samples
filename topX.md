@@ -14,7 +14,7 @@ top_x_by = (tables=<-, by_measurement, x) =>
 hosts_ranked_by_cpu = from(bucket: "telegraf/autogen")
   |> range(start: dashboardTime)
   |> filter(fn: (r) => 
-  	r._measurement == "cpu" and 
+    r._measurement == "cpu" and 
     r._field == "usage_user"
   )
   |>max()
@@ -24,7 +24,7 @@ hosts_ranked_by_cpu = from(bucket: "telegraf/autogen")
 all_hosts_cpu_series = from(bucket: "telegraf/autogen")
   |> range(start: dashboardTime)
   |> filter(fn: (r) => 
-  	r._measurement == "cpu" and 
+    r._measurement == "cpu" and 
     r._field == "usage_user"
   )
   |>rename(columns: {_start: "start", _stop: "stop"})
